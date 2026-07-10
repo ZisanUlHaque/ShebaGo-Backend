@@ -69,6 +69,9 @@ const register = async (payload: {
       password: hashedPassword,
       role: role,
     },
+    omit : {
+      password : true
+    }
   });
 
   return newUser;

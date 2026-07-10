@@ -8,7 +8,7 @@ export const globalErrorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  console.log("Error : ", err);
+  // console.log("Error : ", err);
 
   let statusCode;
   let errorMessage = err.message || "Internal Server Error";

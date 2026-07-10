@@ -1,7 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
   provider = "prisma-client"
@@ -22,6 +18,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  orders Order[]
+
   @@map("users")
 }
 
@@ -32,15 +30,34 @@ model Service {
   serviceType ServiceType
   price       Decimal     @db.Decimal(10, 2) // Single source of truth for base pricing
 
+  orders Order[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("services")
 }
 
-// ==========================================================
+
+model Order {
+  id String @id @default(ulid())
+  userId String
+  serviceId String
+  quantity Int @default(1)
+  totalPrice Decimal
+  orderStatus OrderStatus @default(PENDING)
+  
+  //ref
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("orders")
+}
+
 // ENUMS 
-// ==========================================================
 
 enum Role {
   CUSTOMER
@@ -62,4 +79,13 @@ enum ServiceType {
   PAINTING
   ELECTRICAL
   CONSTRUCTION
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  FAILED
+  REFUNDED
 }

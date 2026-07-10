@@ -4,11 +4,11 @@ import { sendResponse } from "../../utils/send-response";
 import { serviceService } from "./service.service";
 
 const createService = catchAsync(async (req, res) => {
-  console.log("REQ BODY:", req.body);
+  // console.log("REQ BODY:", req.body);
 
   const serviceData = req.body;
 
-  console.log("SERVICE DATA:", serviceData);
+  // console.log("SERVICE DATA:", serviceData);
 
   const response = await serviceService.createService(serviceData);
 

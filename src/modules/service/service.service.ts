@@ -11,7 +11,7 @@ import { prisma } from "../../lib/prisma";
 //   updatedAt DateTime @updatedAt
 
 const createService = async (payload: any) => {
-  console.log("PAYLOAD:", payload);
+  // console.log("PAYLOAD:", payload);
 
   return await prisma.service.create({
     data: payload,
