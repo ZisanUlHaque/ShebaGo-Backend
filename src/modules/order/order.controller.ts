@@ -4,23 +4,22 @@ import { orderService } from "./order.service";
 import httpStatus from "http-status";
 
 const createOrder = catchAsync(async (req, res) => {
-  const userId = req.user?.id;
-  const payload = req.body;
+  const user = req.user;
 
-  if (!payload.quantity || !payload.serviceId) {
-    throw new Error("Please provide service id and quantity");
-  }
-  const response = await orderService.createOrder(userId, payload);
+  const payload = req.body;
+  if (!payload.quantity || !payload.serviceId)
+    throw new Error("Please provide Service Id and  Quantity");
+
+  const { order, paymentUrl } = await orderService.createOrder(payload, user);
 
   sendResponse(res, {
-    success : true,
+    success: true,
     statusCode: httpStatus.CREATED,
-    message: "Order Placed successfully",
-    data: response,
+    message: "Order Placed",
+    data: { order, paymentUrl },
   });
-
 });
 
 export const orderController = {
-    createOrder
-}
+  createOrder,
+};
