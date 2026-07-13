@@ -1,34 +1,40 @@
 # 🚀 ShebaGo Backend
 
-> **A Professional Home Service Booking REST API** built with **Express.js, TypeScript, Prisma ORM, PostgreSQL, JWT Authentication, and SSLCommerz Payment Gateway.**
+> **A RESTful Backend API for an On-Demand Home Service Booking Platform** built with **Express.js, TypeScript, Prisma ORM, PostgreSQL, JWT Authentication, and SSLCommerz Payment Gateway.**
 
-ShebaGo is a service marketplace backend where customers can book different home services such as cleaning, electrical work, painting, construction, IT support, and repair services. The system includes authentication, role-based authorization, order management, and online payment integration.
+ShebaGo allows customers to book home services such as cleaning, repair, painting, electrical work, construction, and IT support. Providers can publish services, customers can place orders, and payments are securely processed using SSLCommerz.
 
 ---
 
-## 📌 Features
+## 🔗 Repository
+
+https://github.com/ZisanUlHaque/ShebaGo-Backend
+
+---
+
+# ✨ Features
 
 - 🔐 JWT Authentication
-- 👤 Role Based Authorization
-- 👥 User Management
+- 👥 Role-Based Authorization
+- 🔒 Password Hashing (bcrypt)
 - 🛠️ Service Management
 - 📦 Order Management
 - 💳 SSLCommerz Payment Integration
-- 📄 Prisma ORM
-- 🐘 PostgreSQL Database
-- ⚡ Express.js + TypeScript
-- 🌍 RESTful API
-- 🍪 Cookie Parser
-- 🔒 Password Hashing with bcrypt
-- ✅ Global Error Handling
-- 📁 Modular Folder Structure
+- 🍪 Cookie-based Authentication Support
+- 🗄️ PostgreSQL Database
+- ⚡ Prisma ORM
+- 🌍 REST API
+- 📁 Modular Architecture
+- ❌ Global Error Handling
+- 🚫 Not Found Middleware
+- 🌱 Database Seeding Support
 
 ---
 
 # 🛠️ Tech Stack
 
-| Technology | Description |
-|------------|-------------|
+| Technology | Usage |
+|------------|-------|
 | Express.js | Backend Framework |
 | TypeScript | Programming Language |
 | Prisma ORM | Database ORM |
@@ -37,52 +43,63 @@ ShebaGo is a service marketplace backend where customers can book different home
 | bcryptjs | Password Hashing |
 | SSLCommerz | Payment Gateway |
 | tsup | Build Tool |
-| tsx | Development Runner |
+| tsx | Development Server |
+| Cookie Parser | Cookie Handling |
+| CORS | Cross-Origin Requests |
 
 ---
 
 # 📂 Project Structure
 
-```
+```text
 ShebaGo-Backend
 │
 ├── prisma
 │   ├── migrations
-│   └── schema.prisma
+│   ├── schema.prisma
+│   └── seed.ts
+│
+├── generated
 │
 ├── src
 │   ├── config
 │   ├── lib
 │   ├── middlewares
 │   ├── modules
+│   │   ├── auth
+│   │   ├── service
+│   │   ├── order
+│   │   └── payment
+│   │
 │   ├── utils
 │   ├── app.ts
 │   └── server.ts
 │
-├── generated
 ├── dist
 ├── .env
+├── .env.example
 ├── package.json
+├── tsconfig.json
 └── README.md
 ```
 
 ---
 
-# 📦 Installation
+# ⚙️ Installation
 
-## Clone the repository
+Clone the repository
 
 ```bash
 git clone https://github.com/ZisanUlHaque/ShebaGo-Backend.git
 ```
 
+Go to project directory
+
 ```bash
 cd ShebaGo-Backend
 ```
 
----
-
-## Install Dependencies
+Install dependencies
 
 ```bash
 npm install
@@ -90,7 +107,7 @@ npm install
 
 ---
 
-## Environment Variables
+# 🔐 Environment Variables
 
 Create a `.env` file in the project root.
 
@@ -113,27 +130,27 @@ SUCCESS_URL=
 FAIL_URL=
 CANCEL_URL=
 
-BACKEND_URL=
-FRONTEND_URL=
+APP_URL=http://localhost:3000
+BACKEND_URL=http://localhost:5000
 ```
 
 ---
 
-# ▶️ Run Project
+# ▶️ Running the Application
 
-### Development
+Development
 
 ```bash
 npm run dev
 ```
 
-### Build
+Build
 
 ```bash
 npm run build
 ```
 
-### Production
+Production
 
 ```bash
 npm start
@@ -141,7 +158,7 @@ npm start
 
 ---
 
-# 🗄️ Database
+# 🗄️ Prisma Commands
 
 Generate Prisma Client
 
@@ -149,7 +166,7 @@ Generate Prisma Client
 npx prisma generate
 ```
 
-Run Migrations
+Run Migration
 
 ```bash
 npx prisma migrate dev
@@ -161,9 +178,7 @@ Open Prisma Studio
 npx prisma studio
 ```
 
----
-
-# 🌱 Seed Database
+Seed Database
 
 ```bash
 npm run seed
@@ -171,15 +186,91 @@ npm run seed
 
 ---
 
-# 👥 User Roles
+# 📚 API Endpoints
 
-- CUSTOMER
-- PROVIDER
-- ADMIN
+## Base URL
+
+```
+http://localhost:5000/api
+```
 
 ---
 
-# 🛠️ Service Types
+## 🔐 Authentication
+
+| Method | Endpoint | Description | Access |
+|---------|----------|-------------|--------|
+| POST | `/auth/register` | Register a new user | Public |
+| POST | `/auth/login` | Login user | Public |
+
+---
+
+## 🛠️ Services
+
+| Method | Endpoint | Description | Access |
+|---------|----------|-------------|--------|
+| GET | `/service` | Get all services | Public |
+| GET | `/service/:id` | Get single service | Public |
+| POST | `/service` | Create service | Provider |
+| PUT | `/service/:id` | Update service | Provider |
+| DELETE | `/service/:id` | Delete service | Provider |
+
+---
+
+## 📦 Orders
+
+| Method | Endpoint | Description | Access |
+|---------|----------|-------------|--------|
+| POST | `/order` | Create Order | Customer |
+
+---
+
+## 💳 Payments
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/payment` | Verify Payment |
+
+---
+
+# 🔑 Authorization
+
+Protected routes require an access token.
+
+```
+Authorization: Bearer YOUR_ACCESS_TOKEN
+```
+
+---
+
+# 👥 User Roles
+
+## CUSTOMER
+
+- Register
+- Login
+- Browse Services
+- Create Orders
+- Make Payments
+
+---
+
+## PROVIDER
+
+- Login
+- Create Service
+- Update Service
+- Delete Service
+
+---
+
+## ADMIN
+
+- Reserved for future implementation.
+
+---
+
+# 🛠️ Service Categories
 
 - IT
 - REPAIR
@@ -210,123 +301,123 @@ npm run seed
 
 ---
 
-# 📚 API Endpoints
+# 🗄️ Database Models
 
-## Authentication
+## User
 
-| Method | Endpoint |
-|---------|----------|
-| POST | `/api/v1/auth/register` |
-| POST | `/api/v1/auth/login` |
-
----
-
-## Users
-
-| Method | Endpoint |
-|---------|----------|
-| GET | `/api/v1/users` |
-| GET | `/api/v1/users/:id` |
-| PATCH | `/api/v1/users/:id` |
-| DELETE | `/api/v1/users/:id` |
+- id
+- name
+- email
+- password
+- role
 
 ---
 
-## Services
+## Service
 
-| Method | Endpoint |
-|---------|----------|
-| POST | `/api/v1/services` |
-| GET | `/api/v1/services` |
-| GET | `/api/v1/services/:id` |
-| PATCH | `/api/v1/services/:id` |
-| DELETE | `/api/v1/services/:id` |
+- id
+- title
+- description
+- serviceType
+- price
 
 ---
 
-## Orders
+## Order
 
-| Method | Endpoint |
-|---------|----------|
-| POST | `/api/v1/orders` |
-| GET | `/api/v1/orders` |
-| GET | `/api/v1/orders/:id` |
-| PATCH | `/api/v1/orders/:id` |
-| DELETE | `/api/v1/orders/:id` |
-
----
-
-## Payments
-
-| Method | Endpoint |
-|---------|----------|
-| POST | `/api/v1/payment/init-payment/:orderId` |
-| POST | `/api/v1/payment/success` |
-| POST | `/api/v1/payment/fail` |
-| POST | `/api/v1/payment/cancel` |
-| POST | `/api/v1/payment/ipn` |
-
-> **Note:** Update the endpoint paths if your routes use different URLs.
+- id
+- quantity
+- totalPrice
+- status
+- userId
+- serviceId
 
 ---
 
-# 🔒 Authentication
+## Payment
 
-Protected APIs require a JWT Access Token.
-
-```http
-Authorization: Bearer YOUR_ACCESS_TOKEN
-```
+- id
+- tranId
+- amount
+- status
+- meta
+- orderId
 
 ---
 
-# 📜 Available Scripts
+# 📦 NPM Scripts
+
+Run development server
 
 ```bash
 npm run dev
 ```
 
-Runs the development server.
+Build project
 
 ```bash
 npm run build
 ```
 
-Builds the application.
+Run production server
 
 ```bash
 npm start
 ```
 
-Starts the production server.
+Generate Prisma Client
+
+```bash
+npx prisma generate
+```
+
+Run migrations
+
+```bash
+npx prisma migrate dev
+```
+
+Seed database
 
 ```bash
 npm run seed
 ```
 
-Seeds the database.
-
 ---
 
-# 📖 Prisma Models
+# 📤 Sample Response
 
-- User
-- Service
-- Order
-- Payment
+## Success
+
+```json
+{
+  "success": true,
+  "message": "Request successful",
+  "data": {}
+}
+```
+
+## Error
+
+```json
+{
+  "success": false,
+  "message": "Something went wrong",
+  "error": {}
+}
+```
 
 ---
 
 # 🚀 Deployment
 
-This project can be deployed on:
+The project can be deployed to:
 
 - Vercel
 - Render
 - Railway
 - DigitalOcean
-- AWS
-- VPS
+- AWS EC2
 
 ---
 
@@ -337,19 +428,19 @@ This project can be deployed on:
 2. Create your feature branch
 
 ```bash
-git checkout -b feature/AmazingFeature
+git checkout -b feature/new-feature
 ```
 
 3. Commit your changes
 
 ```bash
-git commit -m "Add Amazing Feature"
+git commit -m "Added new feature"
 ```
 
-4. Push to the branch
+4. Push the branch
 
 ```bash
-git push origin feature/AmazingFeature
+git push origin feature/new-feature
 ```
 
 5. Open a Pull Request
@@ -359,8 +450,9 @@ git push origin feature/AmazingFeature
 # 👨‍💻 Author
 
 **Zisan Ul Haque**
+
 ---
 
 # ⭐ Support
 
-If you like this project, don't forget to **⭐ Star** the repository.
+If you found this project helpful, consider giving it a ⭐ on GitHub.
