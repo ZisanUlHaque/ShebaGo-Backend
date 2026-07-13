@@ -5,8 +5,10 @@
   "private": true,
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "prisma generate && tsup",
     "start": "node dist/server.js",
+    "postinstall": "prisma generate",
+    "seed": "tsx prisma/seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -35,6 +37,7 @@
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.22.0",
-    "sslcommerz-lts": "^1.2.0"
+    "sslcommerz-lts": "^1.2.0",
+    "tsup": "^8.5.1"
   }
 }
